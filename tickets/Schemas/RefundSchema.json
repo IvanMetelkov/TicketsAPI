@@ -1,0 +1,53 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Refund Schema",
+    "required": [
+        "operation_type",
+        "operation_time",
+        "operation_place",
+        "ticket_number"
+    ],
+    "properties": {
+        "operation_type": {
+            "type": "string",
+            "default": "",
+            "title": "The operation_type Schema",
+            "examples": [
+                "refund"
+            ]
+        },
+        "operation_time": {
+            "type": "string",
+            "default": "",
+            "title": "The operation_time Schema",
+            "examples": [
+                "2022-01-01T03:25+03:00"
+            ]
+        },
+        "operation_place": {
+            "type": "string",
+            "default": "",
+            "title": "The operation_place Schema",
+            "examples": [
+                "Aeroflot"
+            ]
+        },
+        "ticket_number": {
+            "type": "string",
+            "default": "",
+            "title": "The ticket_number Schema",
+            "examples": [
+                "5552139265672"
+            ]
+        }
+    },
+    "examples": [{
+        "operation_type": "refund",
+        "operation_time": "2022-01-01T03:25+03:00",
+        "operation_place": "Aeroflot",
+        "ticket_number": "5552139265672"
+    }]
+}
