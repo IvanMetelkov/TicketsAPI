@@ -75,6 +75,8 @@ namespace tickets
                 endpoints.MapControllers();
             });
 
+            //an alternative: just populate the cache from the beggining
+            //(maybe use lazy initialization?)
             /*Dictionary<string, string> schemaPaths = Configuration.GetSection("Schemas").Get<Dictionary<string, string>>();
             foreach (KeyValuePair<string, string> entry in schemaPaths)
             {

@@ -7,5 +7,6 @@ namespace tickets.DAL
     public interface ISegmentRepository
     {
         Task AddSegmentsAsync(IEnumerable<Segment> segments);
+        Task<bool> RefundTicketAsync(string ticketNumber);
     }
 }

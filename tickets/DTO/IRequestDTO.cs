@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-
-namespace tickets.DTO
+﻿namespace tickets.DTO
 {
     public interface IRequestDTO
     {

@@ -9,9 +9,8 @@ using tickets.Model;
 namespace tickets.Controllers
 {
     [ApiController]
-    [Route("process")]
+    [Route("v{version:apiVersion}/process")]
     [ApiVersion("1.0")]
-    [RequestSizeLimit(2048)]
     public class SegmentsController : ControllerBase
     {
         private readonly ISegmentRepository _repository;
@@ -26,6 +25,7 @@ namespace tickets.Controllers
 
         [Route("sale")]
         [HttpPost]
+        [RequestSizeLimit(2048)]
         public async Task<ActionResult> RegisterSale(TicketDTO ticket)
         {
             if (!await _validator.ValidateDTOAsync(ticket))
@@ -47,10 +47,14 @@ namespace tickets.Controllers
         [HttpPost]
         public async Task<ActionResult> RefundTicket(RefundDTO refund)
         {
-            //TODO: add real implementation
             if (!await _validator.ValidateDTOAsync(refund))
             {
                 return BadRequest();
+            }
+
+            if (!await _repository.RefundTicketAsync(refund.TicketNumber))
+            {
+                return Conflict();
             }
 
             return Ok();

@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using System;
 
 namespace tickets.DAL
 {
@@ -24,13 +25,20 @@ namespace tickets.DAL
         public async Task<bool> ValidateDTOAsync(IRequestDTO requestDTO)
         {
             JSchema schema = null;
+            //TODO: eliminate possible race conditions + add lazy?
+            int cacheSlidingExpiration = 2, cacheAbsoluteExpiration = 10;
             if (requestDTO.OperationType != null && !_cache.TryGetValue(requestDTO.OperationType, out schema))
             {
                 if (_schemaPaths.TryGetValue(requestDTO.OperationType, out string path))
                 {
                     string schemaString = await File.ReadAllTextAsync(path);
                     schema = JSchema.Parse(schemaString);
-                    _cache.Set(requestDTO.OperationType, schema);
+                    var memoryCacheEntryOptions = new MemoryCacheEntryOptions
+                    {
+                        SlidingExpiration = TimeSpan.FromMinutes(cacheSlidingExpiration),
+                        AbsoluteExpiration = DateTime.Now.AddMinutes(cacheAbsoluteExpiration)
+                    };
+                    _cache.Set(requestDTO.OperationType, schema, memoryCacheEntryOptions);
                 }
             }
 

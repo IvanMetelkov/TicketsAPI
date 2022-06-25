@@ -55,7 +55,7 @@ namespace tickets.Middleware
                         }
                         break;
                     default:
-                        //unhandled error defaults to 500
+                        //an unhandled error defaults to 500
                         break;
                 }
 
