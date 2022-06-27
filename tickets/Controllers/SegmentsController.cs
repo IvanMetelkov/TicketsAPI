@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using tickets.DAL;
 using tickets.DTO;
 using tickets.Model;
+using tickets.Validation;
 
 namespace tickets.Controllers
 {
@@ -33,6 +34,11 @@ namespace tickets.Controllers
                 return BadRequest();
             }
 
+            if (!_validator.ValidateSale(ticket)|| !_validator.ValidatePassenger(ticket.Passenger) || !_validator.ValidateSegments(ticket.Routes))
+            {
+                return BadRequest();
+            }
+
             IEnumerable<Segment> segments = _mapper.Map<IEnumerable<Segment>>(ticket.Routes);
             foreach (Segment segment in segments)
             {
@@ -48,6 +54,11 @@ namespace tickets.Controllers
         public async Task<ActionResult> RefundTicket(RefundDTO refund)
         {
             if (!await _validator.ValidateDTOAsync(refund))
+            {
+                return BadRequest();
+            }
+
+            if (!_validator.ValidateRefund(refund))
             {
                 return BadRequest();
             }

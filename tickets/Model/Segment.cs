@@ -62,6 +62,12 @@ namespace tickets.Model
         public string DocNumber { get; set; }
 
         [Required]
+        public DateTime BirthDate { get; set; }
+
+        [Required]
         public string Gender { get; set; }
+
+        [Required]
+        public string PassengerType { get; set; }
     }
 }

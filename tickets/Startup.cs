@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,7 +18,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using tickets.DAL;
+using tickets.DTO;
 using tickets.Middleware;
+using tickets.Validation;
 
 namespace tickets
 {
@@ -32,8 +35,8 @@ namespace tickets
 
         public void ConfigureServices(IServiceCollection services)
         {
-            const string nameOfConnection = "TicketsConnection";
-            services.AddDbContext<SegmentContext>(options => options.UseNpgsql(Configuration.GetConnectionString(nameOfConnection)));
+            const string connectionName = "TicketsConnection";
+            services.AddDbContext<SegmentContext>(options => options.UseNpgsql(Configuration.GetConnectionString(connectionName)));
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {
@@ -52,16 +55,19 @@ namespace tickets
 
             services.AddMemoryCache();
 
-            services.AddSingleton<IValidator>(v => ActivatorUtilities.CreateInstance<Validator>(v, Configuration.GetSection("Schemas").Get<Dictionary<string, string>>()));
+            services.AddScoped<Validation.IValidator, Validator>();
+
+            services.AddScoped<IValidator<PassengerDTO>, PassengerValidator>();
+
+            services.AddScoped<IValidator<SegmentDTO>, SegmentValidator>();
+
+            services.AddScoped<IValidator<TicketDTO>, SaleValidator>();
+
+            services.AddScoped<IValidator<RefundDTO>, RefundValidator>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*, IMemoryCache memoryCache*/)
+        public void Configure(IApplicationBuilder app, IMemoryCache memoryCache)
         {
-            /*if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }*/
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -75,18 +81,17 @@ namespace tickets
                 endpoints.MapControllers();
             });
 
-            //an alternative: just populate the cache from the beggining
-            //(maybe use lazy initialization?)
-            /*Dictionary<string, string> schemaPaths = Configuration.GetSection("Schemas").Get<Dictionary<string, string>>();
+            const string sectionName = "Schemas";
+            Dictionary<string, string> schemaPaths = Configuration.GetSection(sectionName).Get<Dictionary<string, string>>();
             foreach (KeyValuePair<string, string> entry in schemaPaths)
             {
-                if (!memoryCache.TryGetValue(entry.Key, out JSchema _))
+                memoryCache.Set(entry.Key, new AsyncLazy<JSchema>(async () =>
                 {
-                    string schemaString = File.ReadAllText(entry.Value);
+                    string schemaString = await File.ReadAllTextAsync(entry.Value);
                     JSchema schema = JSchema.Parse(schemaString);
-                    memoryCache.Set(entry.Key, schema);
-                }
-            }*/
+                    return schema;
+                }, System.Threading.LazyThreadSafetyMode.ExecutionAndPublication));
+            }
         }
     }
 }
