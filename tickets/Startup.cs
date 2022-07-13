@@ -1,4 +1,4 @@
-using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,9 +18,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using tickets.DAL;
-using tickets.DTO;
 using tickets.Middleware;
 using tickets.Validation;
+using Microsoft.AspNetCore.Http;
+using tickets.Filters;
 
 namespace tickets
 {
@@ -38,14 +39,26 @@ namespace tickets
             const string connectionName = "TicketsConnection";
             services.AddDbContext<SegmentContext>(options => options.UseNpgsql(Configuration.GetConnectionString(connectionName)));
 
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers(options =>
             {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                options.Filters.Add<ValidationFilter>();
+            })
+                .AddFluentValidation(fv =>
                 {
-                    NamingStrategy = new SnakeCaseNamingStrategy()
-                };
-                options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-            }); ;
+                    fv.RegisterValidatorsFromAssemblyContaining<SaleValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RefundValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<SegmentValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<PassengerValidator>();
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new SnakeCaseNamingStrategy()
+                    };
+                    options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                });
+
 
             services.AddApiVersioning();
 
@@ -55,15 +68,7 @@ namespace tickets
 
             services.AddMemoryCache();
 
-            services.AddScoped<Validation.IValidator, Validator>();
-
-            services.AddScoped<IValidator<PassengerDTO>, PassengerValidator>();
-
-            services.AddScoped<IValidator<SegmentDTO>, SegmentValidator>();
-
-            services.AddScoped<IValidator<TicketDTO>, SaleValidator>();
-
-            services.AddScoped<IValidator<RefundDTO>, RefundValidator>();
+            services.AddScoped<IValidator, Validator>();
         }
 
         public void Configure(IApplicationBuilder app, IMemoryCache memoryCache)

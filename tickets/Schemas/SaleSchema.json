@@ -1,283 +1,230 @@
 {
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "http://example.com/example.json",
-    "type": "object",
-    "default": {},
-    "title": "Sale Schema",
-    "required": [
-        "operation_type",
-        "operation_time",
-        "operation_place",
-        "passenger",
-        "routes"
-    ],
-    "properties": {
-        "operation_type": {
-            "type": "string",
-            "default": "",
-            "title": "The operation_type Schema",
-            "examples": [
-                "sale"
-            ]
-        },
-        "operation_time": {
-            "type": "string",
-            "default": "",
-            "title": "The operation_time Schema",
-            "examples": [
-                "2022-01-01T03:25+03:00"
-            ]
-        },
-        "operation_place": {
-            "type": "string",
-            "default": "",
-            "title": "The operation_place Schema",
-            "examples": [
-                "Aeroflot"
-            ]
-        },
-        "passenger": {
-            "type": "object",
-            "default": {},
-            "title": "The passenger Schema",
-            "required": [
-                "name",
-                "surname",
-                "patronymic",
-                "doc_type",
-                "doc_number",
-                "birthdate",
-                "gender",
-                "passenger_type",
-                "ticket_number",
-                "ticket_type"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The name Schema",
-                    "examples": [
-                        "Dmitrii"
-                    ]
-                },
-                "surname": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The surname Schema",
-                    "examples": [
-                        "Makarov"
-                    ]
-                },
-                "patronymic": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The patronymic Schema",
-                    "examples": [
-                        "Pavlovich"
-                    ]
-                },
-                "doc_type": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The doc_type Schema",
-                    "examples": [
-                        "00"
-                    ]
-                },
-                "doc_number": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The doc_number Schema",
-                    "examples": [
-                        "3108111434"
-                    ]
-                },
-                "birthdate": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The birthdate Schema",
-                    "examples": [
-                        "2001-07-12"
-                    ]
-                },
-                "gender": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The gender Schema",
-                    "examples": [
-                        "M"
-                    ]
-                },
-                "passenger_type": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The passenger_type Schema",
-                    "examples": [
-                        "youth"
-                    ]
-                },
-                "ticket_number": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The ticket_number Schema",
-                    "examples": [
-                        "5552139265672"
-                    ]
-                },
-                "ticket_type": {
-                    "type": "integer",
-                    "default": 0,
-                    "title": "The ticket_type Schema",
-                    "examples": [
-                        1
-                    ]
-                }
-            },
-            "examples": [{
-                "name": "Dmitrii",
-                "surname": "Makarov",
-                "patronymic": "Pavlovich",
-                "doc_type": "00",
-                "doc_number": "3108111434",
-                "birthdate": "2001-07-12",
-                "gender": "M",
-                "passenger_type": "youth",
-                "ticket_number": "5552139265672",
-                "ticket_type": 1
-            }]
-        },
-        "routes": {
-            "type": "array",
-            "default": [],
-            "title": "The routes Schema",
-            "items": {
-                "type": "object",
-                "title": "A Schema",
-                "required": [
-                    "airline_code",
-                    "flight_num",
-                    "depart_place",
-                    "depart_datetime",
-                    "arrive_place",
-                    "arrive_datetime",
-                    "pnr_id"
-                ],
-                "properties": {
-                    "airline_code": {
-                        "type": "string",
-                        "title": "The airline_code Schema",
-                        "examples": [
-                            "SU"
-                        ]
-                    },
-                    "flight_num": {
-                        "type": "integer",
-                        "title": "The flight_num Schema",
-                        "examples": [
-                            1701,
-                            1702
-                        ]
-                    },
-                    "depart_place": {
-                        "type": "string",
-                        "title": "The depart_place Schema",
-                        "examples": [
-                            "AAQ",
-                            "NSK"
-                        ]
-                    },
-                    "depart_datetime": {
-                        "type": "string",
-                        "title": "The depart_datetime Schema",
-                        "examples": [
-                            "2022-01-02T09:20+10:00",
-                            "2022-01-05T16:10+03:00"
-                        ]
-                    },
-                    "arrive_place": {
-                        "type": "string",
-                        "title": "The arrive_place Schema",
-                        "examples": [
-                            "NSK",
-                            "AAQ"
-                        ]
-                    },
-                    "arrive_datetime": {
-                        "type": "string",
-                        "title": "The arrive_datetime Schema",
-                        "examples": [
-                            "2022-01-02T11:25+03:00",
-                            "2022-01-05T07:40+10:00"
-                        ]
-                    },
-                    "pnr_id": {
-                        "type": "string",
-                        "title": "The pnr_id Schema",
-                        "examples": [
-                            "THALSZ"
-                        ]
-                    }
-                },
-                "examples": [{
-                    "airline_code": "SU",
-                    "flight_num": 1701,
-                    "depart_place": "AAQ",
-                    "depart_datetime": "2022-01-02T09:20+10:00",
-                    "arrive_place": "NSK",
-                    "arrive_datetime": "2022-01-02T11:25+03:00",
-                    "pnr_id": "THALSZ"
-                },
-                {
-                    "airline_code": "SU",
-                    "flight_num": 1702,
-                    "depart_place": "NSK",
-                    "depart_datetime": "2022-01-05T16:10+03:00",
-                    "arrive_place": "AAQ",
-                    "arrive_datetime": "2022-01-05T07:40+10:00",
-                    "pnr_id": "THALSZ"
-                }]
-            },
-            "examples": [
-                [{
-                    "airline_code": "SU",
-                    "flight_num": 1701,
-                    "depart_place": "AAQ",
-                    "depart_datetime": "2022-01-02T09:20+10:00",
-                    "arrive_place": "NSK",
-                    "arrive_datetime": "2022-01-02T11:25+03:00",
-                    "pnr_id": "THALSZ"
-                },
-                {
-                    "airline_code": "SU",
-                    "flight_num": 1702,
-                    "depart_place": "NSK",
-                    "depart_datetime": "2022-01-05T16:10+03:00",
-                    "arrive_place": "AAQ",
-                    "arrive_datetime": "2022-01-05T07:40+10:00",
-                    "pnr_id": "THALSZ"
-                }]
-            ],
-            "minItems": 1
-        }
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "default": {},
+  "title": "Sale Schema",
+  "required": [
+    "operation_type",
+    "operation_time",
+    "operation_place",
+    "passenger",
+    "routes"
+  ],
+  "properties": {
+    "operation_type": {
+      "type": "string",
+      "default": "",
+      "title": "The operation_type Schema",
+      "examples": [
+        "sale"
+      ]
     },
-    "examples": [{
-        "operation_type": "sale",
-        "operation_time": "2022-01-01T03:25+03:00",
-        "operation_place": "Aeroflot",
-        "passenger": {
-            "name": "Dmitrii",
-            "surname": "Makarov",
-            "patronymic": "Pavlovich",
-            "doc_type": "00",
-            "doc_number": "3108111434",
-            "birthdate": "2001-07-12",
-            "gender": "M",
-            "passenger_type": "youth",
-            "ticket_number": "5552139265672",
-            "ticket_type": 1
+    "operation_time": {
+      "type": "string",
+      "default": "",
+      "title": "The operation_time Schema",
+      "examples": [
+        "2022-01-01T03:25+03:00"
+      ]
+    },
+    "operation_place": {
+      "type": "string",
+      "default": "",
+      "title": "The operation_place Schema",
+      "examples": [
+        "Aeroflot"
+      ]
+    },
+    "passenger": {
+      "type": "object",
+      "default": {},
+      "title": "The passenger Schema",
+      "required": [
+        "name",
+        "surname",
+        "patronymic",
+        "doc_type",
+        "doc_number",
+        "birthdate",
+        "gender",
+        "passenger_type",
+        "ticket_number",
+        "ticket_type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "default": "",
+          "title": "The name Schema",
+          "examples": [
+            "Dmitrii"
+          ]
         },
-        "routes": [{
+        "surname": {
+          "type": "string",
+          "default": "",
+          "title": "The surname Schema",
+          "examples": [
+            "Makarov"
+          ]
+        },
+        "patronymic": {
+          "type": "string",
+          "default": "",
+          "title": "The patronymic Schema",
+          "examples": [
+            "Pavlovich"
+          ]
+        },
+        "doc_type": {
+          "type": "string",
+          "default": "",
+          "title": "The doc_type Schema",
+          "examples": [
+            "00"
+          ]
+        },
+        "doc_number": {
+          "type": "string",
+          "default": "",
+          "title": "The doc_number Schema",
+          "examples": [
+            "3108111434"
+          ]
+        },
+        "birthdate": {
+          "type": "string",
+          "default": "",
+          "title": "The birthdate Schema",
+          "examples": [
+            "2001-07-12"
+          ]
+        },
+        "gender": {
+          "type": "string",
+          "default": "",
+          "title": "The gender Schema",
+          "examples": [
+            "M"
+          ]
+        },
+        "passenger_type": {
+          "type": "string",
+          "default": "",
+          "title": "The passenger_type Schema",
+          "examples": [
+            "youth"
+          ]
+        },
+        "ticket_number": {
+          "type": "string",
+          "default": "",
+          "title": "The ticket_number Schema",
+          "examples": [
+            "5552139265672"
+          ]
+        },
+        "ticket_type": {
+          "type": "integer",
+          "default": 0,
+          "title": "The ticket_type Schema",
+          "examples": [
+            1
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "examples": [
+        {
+          "name": "Dmitrii",
+          "surname": "Makarov",
+          "patronymic": "Pavlovich",
+          "doc_type": "00",
+          "doc_number": "3108111434",
+          "birthdate": "2001-07-12",
+          "gender": "M",
+          "passenger_type": "youth",
+          "ticket_number": "5552139265672",
+          "ticket_type": 1
+        }
+      ]
+    },
+    "routes": {
+      "type": "array",
+      "default": [],
+      "title": "The routes Schema",
+      "items": {
+        "type": "object",
+        "title": "A Schema",
+        "required": [
+          "airline_code",
+          "flight_num",
+          "depart_place",
+          "depart_datetime",
+          "arrive_place",
+          "arrive_datetime",
+          "pnr_id"
+        ],
+        "properties": {
+          "airline_code": {
+            "type": "string",
+            "title": "The airline_code Schema",
+            "examples": [
+              "SU"
+            ]
+          },
+          "flight_num": {
+            "type": "integer",
+            "title": "The flight_num Schema",
+            "examples": [
+              1701,
+              1702
+            ]
+          },
+          "depart_place": {
+            "type": "string",
+            "title": "The depart_place Schema",
+            "examples": [
+              "AAQ",
+              "NSK"
+            ]
+          },
+          "depart_datetime": {
+            "type": "string",
+            "title": "The depart_datetime Schema",
+            "examples": [
+              "2022-01-02T09:20+10:00",
+              "2022-01-05T16:10+03:00"
+            ]
+          },
+          "arrive_place": {
+            "type": "string",
+            "title": "The arrive_place Schema",
+            "examples": [
+              "NSK",
+              "AAQ"
+            ]
+          },
+          "arrive_datetime": {
+            "type": "string",
+            "title": "The arrive_datetime Schema",
+            "examples": [
+              "2022-01-02T11:25+03:00",
+              "2022-01-05T07:40+10:00"
+            ]
+          },
+          "pnr_id": {
+            "type": "string",
+            "title": "The pnr_id Schema",
+            "examples": [
+              "THALSZ"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "examples": [
+          {
             "airline_code": "SU",
             "flight_num": 1701,
             "depart_place": "AAQ",
@@ -285,8 +232,8 @@
             "arrive_place": "NSK",
             "arrive_datetime": "2022-01-02T11:25+03:00",
             "pnr_id": "THALSZ"
-        },
-        {
+          },
+          {
             "airline_code": "SU",
             "flight_num": 1702,
             "depart_place": "NSK",
@@ -294,6 +241,72 @@
             "arrive_place": "AAQ",
             "arrive_datetime": "2022-01-05T07:40+10:00",
             "pnr_id": "THALSZ"
-        }]
-    }]
+          }
+        ]
+      },
+      "examples": [
+        [
+          {
+            "airline_code": "SU",
+            "flight_num": 1701,
+            "depart_place": "AAQ",
+            "depart_datetime": "2022-01-02T09:20+10:00",
+            "arrive_place": "NSK",
+            "arrive_datetime": "2022-01-02T11:25+03:00",
+            "pnr_id": "THALSZ"
+          },
+          {
+            "airline_code": "SU",
+            "flight_num": 1702,
+            "depart_place": "NSK",
+            "depart_datetime": "2022-01-05T16:10+03:00",
+            "arrive_place": "AAQ",
+            "arrive_datetime": "2022-01-05T07:40+10:00",
+            "pnr_id": "THALSZ"
+          }
+        ]
+      ],
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "operation_type": "sale",
+      "operation_time": "2022-01-01T03:25+03:00",
+      "operation_place": "Aeroflot",
+      "passenger": {
+        "name": "Dmitrii",
+        "surname": "Makarov",
+        "patronymic": "Pavlovich",
+        "doc_type": "00",
+        "doc_number": "3108111434",
+        "birthdate": "2001-07-12",
+        "gender": "M",
+        "passenger_type": "youth",
+        "ticket_number": "5552139265672",
+        "ticket_type": 1
+      },
+      "routes": [
+        {
+          "airline_code": "SU",
+          "flight_num": 1701,
+          "depart_place": "AAQ",
+          "depart_datetime": "2022-01-02T09:20+10:00",
+          "arrive_place": "NSK",
+          "arrive_datetime": "2022-01-02T11:25+03:00",
+          "pnr_id": "THALSZ"
+        },
+        {
+          "airline_code": "SU",
+          "flight_num": 1702,
+          "depart_place": "NSK",
+          "depart_datetime": "2022-01-05T16:10+03:00",
+          "arrive_place": "AAQ",
+          "arrive_datetime": "2022-01-05T07:40+10:00",
+          "pnr_id": "THALSZ"
+        }
+      ]
+    }
+  ]
 }

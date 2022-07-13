@@ -1,72 +1,36 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using tickets.DAL;
 using tickets.DTO;
-using tickets.Model;
-using tickets.Validation;
 
 namespace tickets.Controllers
 {
     [ApiController]
-    [Route("v{version:apiVersion}/process")]
+    [Route("api/v{version:apiVersion}")]
     [ApiVersion("1.0")]
+    [RequestSizeLimit(2048)]
     public class SegmentsController : ControllerBase
     {
         private readonly ISegmentRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly IValidator _validator;
-        public SegmentsController(ISegmentRepository repository, IMapper mapper, IValidator validator)
+        public SegmentsController(ISegmentRepository repository)
         {
             _repository = repository;
-            _mapper = mapper;
-            _validator = validator;
         }
 
         [Route("sale")]
         [HttpPost]
-        [RequestSizeLimit(2048)]
-        public async Task<ActionResult> RegisterSale(TicketDTO ticket)
+        public async Task<ActionResult> RegisterSaleAsync(TicketDTO ticket)
         {
-            if (!await _validator.ValidateDTOAsync(ticket))
-            {
-                return BadRequest();
-            }
-
-            if (!_validator.ValidateSale(ticket)|| !_validator.ValidatePassenger(ticket.Passenger) || !_validator.ValidateSegments(ticket.Routes))
-            {
-                return BadRequest();
-            }
-
-            IEnumerable<Segment> segments = _mapper.Map<IEnumerable<Segment>>(ticket.Routes);
-            foreach (Segment segment in segments)
-            {
-                _mapper.Map(ticket.Passenger, segment);
-            }
-            await _repository.AddSegmentsAsync(segments);
+            await _repository.AddSegmentsAsync(ticket);
 
             return Ok();
         }
 
         [Route("refund")]
         [HttpPost]
-        public async Task<ActionResult> RefundTicket(RefundDTO refund)
+        public async Task<ActionResult> RefundTicketAsync(RefundDTO refund)
         {
-            if (!await _validator.ValidateDTOAsync(refund))
-            {
-                return BadRequest();
-            }
-
-            if (!_validator.ValidateRefund(refund))
-            {
-                return BadRequest();
-            }
-
-            if (!await _repository.RefundTicketAsync(refund.TicketNumber))
-            {
-                return Conflict();
-            }
+            await _repository.RefundTicketAsync(refund);
 
             return Ok();
         }

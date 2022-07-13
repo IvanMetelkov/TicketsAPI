@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using tickets.Model;
+﻿using System.Threading.Tasks;
+using tickets.DTO;
 
 namespace tickets.DAL
 {
     public interface ISegmentRepository
     {
-        Task AddSegmentsAsync(IEnumerable<Segment> segments);
-        Task<bool> RefundTicketAsync(string ticketNumber);
+        Task AddSegmentsAsync(TicketDTO ticket);
+        Task RefundTicketAsync(RefundDTO refund);
     }
 }

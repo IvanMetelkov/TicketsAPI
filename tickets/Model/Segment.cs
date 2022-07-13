@@ -69,5 +69,14 @@ namespace tickets.Model
 
         [Required]
         public string PassengerType { get; set; }
+
+        [Required]
+        public string OperationPlace { get; set; }
+
+        [Required]
+        public DateTimeOffset OperationTime { get; set; }
+
+        [Required]
+        public short OperationTimeTimezone { get; set; }
     }
 }

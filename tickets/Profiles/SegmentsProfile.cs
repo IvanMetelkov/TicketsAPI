@@ -11,8 +11,11 @@ namespace tickets.Profiles
             CreateMap<PassengerDTO, Segment>();
             CreateMap<SegmentDTO, Segment>().AfterMap((_, d) =>
             {
-                d.ArriveTimeTimezone = (short)d.ArriveDatetime.Offset.Hours;
-                d.DepartTimeTimezone = (short)d.DepartDatetime.Offset.Hours;
+                d.ArriveTimeTimezone = (short)-d.ArriveDatetime.Offset.Hours;
+                d.DepartTimeTimezone = (short)-d.DepartDatetime.Offset.Hours;
+            });
+            CreateMap<TicketDTO, Segment>().AfterMap((_, d) =>{
+                d.OperationTimeTimezone = (short)-d.OperationTime.Offset.Hours;
             });
         }
     }

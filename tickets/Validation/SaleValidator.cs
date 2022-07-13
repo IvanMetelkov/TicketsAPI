@@ -5,10 +5,10 @@ namespace tickets.Validation
 {
     public class SaleValidator : RequestValidator<TicketDTO>
     {
-        public SaleValidator() : base()
+        public SaleValidator(IValidator<PassengerDTO> passengerValidator, IValidator<SegmentDTO> segmentValidator) : base()
         {
-            RuleFor(r => r.Passenger).NotNull();
-            RuleFor(r => r.Routes).NotEmpty();
+            RuleFor(r => r.Passenger).SetValidator(passengerValidator);
+            RuleForEach(r => r.Routes).SetValidator(segmentValidator);
         }
     }
 }
